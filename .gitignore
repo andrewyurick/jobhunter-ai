@@ -23,3 +23,5 @@ Thumbs.db
 # ADK / local runtime files
 *.db
 adk_sessions.db
+
+generated/

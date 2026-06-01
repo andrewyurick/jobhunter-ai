@@ -55,15 +55,32 @@ async def call_agent(
 
     final_text = "No final response was produced."
 
-    async for event in runner.run_async(
-        user_id=user_id,
-        session_id=session_id,
-        new_message=user_content,
-    ):
-        if event.is_final_response():
-            if event.content and event.content.parts:
-                final_text = event.content.parts[0].text or final_text
-            break
+    try:
+        async for event in runner.run_async(
+            user_id=user_id,
+            session_id=session_id,
+            new_message=user_content,
+        ):
+            if event.is_final_response():
+                if event.content and event.content.parts:
+                    final_text = event.content.parts[0].text or final_text
+                break
+
+    except Exception as exc:
+        error_text = str(exc)
+
+        if "503" in error_text or "UNAVAILABLE" in error_text:
+            final_text = (
+                "Gemini is currently overloaded or unavailable. "
+                "Try again, or switch ADK_MODEL in your .env to a lighter model."
+            )
+        elif "API key" in error_text or "GOOGLE_API_KEY" in error_text:
+            final_text = (
+                "The Gemini API key is missing or invalid. "
+                "Check your .env file and make sure GOOGLE_API_KEY is set."
+            )
+        else:
+            final_text = f"Agent error: {error_text}"
 
     return {
         "session_id": session_id,

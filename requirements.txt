@@ -4,3 +4,10 @@ uvicorn[standard]>=0.34.0
 python-dotenv>=1.0.1
 requests>=2.32.3
 pydantic>=2.8.0
+
+# PDF upload / parsing
+pypdf>=5.0.0
+python-multipart>=0.0.12
+
+# PDF generation
+reportlab>=4.2.0
