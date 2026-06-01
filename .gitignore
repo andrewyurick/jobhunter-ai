@@ -1,0 +1,25 @@
+# Virtual environment
+.venv/
+venv/
+
+# Environment variables / secrets
+.env
+
+# Python cache
+__pycache__/
+*.py[cod]
+*.pyo
+
+# VS Code
+.vscode/
+
+# OS junk
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# ADK / local runtime files
+*.db
+adk_sessions.db
